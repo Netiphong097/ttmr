@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รพ.พนัสนิคม</title>
+    <link rel="stylesheet" href="public/css/main_v1.css">
+</head>
+<body>
+  <div v-if="loading" id="overlay"><div>
+    <div><img src="./public/img/loading.gif" alt="" height="120"></div>
+    กำลังตรวจสอบ...
+</div></div>
+<script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+<script>
+  function runApp() {
+    liff.getProfile().then(profile => {
+        console.log(profile);
+         window.location.href = "https://716f-203-113-122-165.ngrok.io/ttms/chk.php?uid="+profile.userId+"&pictureUrl="+profile.pictureUrl+"&displayName="+profile.displayName;
+        //  window.location.href = "http://203.113.122.165:18880?userid="+profile.userId;
+    }).catch(err => console.error(err));
+  }
+  liff.init({ liffId: "1653606685-GVVXk9yD" }, () => {
+      if (liff.isInClient()) { // เปิด LIFF ในแอป LINE ปะ?
+        runApp()
+      } else {// เพื่อรองรับการเปิดในเว็บเบราเซอร์
+        if (liff.isLoggedIn()) {
+          runApp()
+        } else {
+          liff.login();
+        }
+      }
+  }, err => console.error(err.code, error.message));
+</script>
+</body>
+
+</html>
